@@ -2,7 +2,7 @@ import type { Customer } from "./types.ts";
 import { useState, useEffect, } from "react";
 import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
-import { Button, Stack } from "@mui/material";
+import { Stack } from "@mui/material";
 import { deleteCustomer, fetchCustomer } from "./customerAPI";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -32,7 +32,7 @@ function CustomerList() {
                     />
                     <DeleteIcon
                         style={{ cursor: "pointer" }}
-                        onClick={() => handleDelete(params.row)}
+                        onClick={() => handleDelete(params.row._links.self.href)}
                     />
                 </div>
             ),
@@ -82,7 +82,25 @@ function CustomerList() {
     }
 
     const handleEdit = (updatedCustomer: Customer) => {
-        const { _links, ...customerWithoutLinks } = updatedCustomer;
+        const {
+            firstname,
+            lastname,
+            email,
+            phone,
+            streetaddress,
+            postcode,
+            city,
+        } = updatedCustomer;
+
+        const customerWithoutLinks = {
+            firstname,
+            lastname,
+            email,
+            phone,
+            streetaddress,
+            postcode,
+            city,
+        };
 
         fetch(updatedCustomer._links.self.href, {
             method: 'PUT',

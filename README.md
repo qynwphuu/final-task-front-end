@@ -1,73 +1,49 @@
-# React + TypeScript + Vite
+# Personal Trainer REST API
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project provides a REST API for managing personal training customers and their training sessions. It supports full CRUD operations for both **customers** and **trainings**, making it suitable for fitness applications, coaching platforms, or educational projects.
 
-Currently, two official plugins are available:
+## 📌 Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The API is built around two main resources:
 
-## React Compiler
+### **Customers**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* Represents individuals receiving personal training.
+* Includes basic information such as name and contact details.
 
-## Expanding the ESLint configuration
+### **Trainings**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* Represents training sessions linked to a specific customer.
+* Includes details such as:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+  * Date & time
+  * Duration
+  * Exercises performed
+* Each customer can have **multiple** training sessions (one-to-many relationship).
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🌐 Base URL
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Use this as the root for all API requests.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🔄 Resetting the Database
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+You can reset the database to its original demo state using:
+
 ```
+POST https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/reset
+```
+
+**Successful response:**
+
+* Status: `200 OK`
+* Body: `DB reset done`
+
+If the reset fails, the API returns an appropriate error status and message.
+
+## 📖 Documentation
+
+This API documentation is generated using **MkDocs** with the *Read the Docs* theme.
