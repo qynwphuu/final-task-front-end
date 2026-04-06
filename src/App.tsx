@@ -1,13 +1,19 @@
 import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
-import CustomerList from './CustomerList';
+import CustomerList from './components/CustomerList';
 
 function App() {
   return (
-    <Container maxWidth="lg">
+    <div
+      style={{
+        height: "100vh",
+        width: "100vw",
+        display: "flex",
+        flexDirection: "column"
+      }}
+    >
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div">
@@ -16,10 +22,13 @@ function App() {
         </Toolbar>
       </AppBar>
 
-      <CustomerList />
+      <div style={{ flex: 1 }}>
+        <CustomerList />
+      </div>
+
       <CssBaseline />
-    </Container>
-  )
+    </div>
+  );
 }
 
 export default App

@@ -1,40 +1,43 @@
-import type { Customer } from "./types";
+import type { Customer } from "./types.ts";
 import { useState, useEffect, } from "react";
 import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button, Stack } from "@mui/material";
-import { deleteCustomer, fetchCustomer } from "./customerAPI.ts";
+import { deleteCustomer, fetchCustomer } from "./customerAPI";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddCustomer from "./AddCustomer.tsx";
 
 function CustomerList() {
     const [customers, setCustomers] = useState<Customer[]>([]);
 
     const columns: GridColDef<Customer>[] = [
-        // Delete button column
         {
-            field: "_links.self.href",
-            headerName: "",
+            field: "actions",
+            headerName: "Actions",
             sortable: false,
-            filterable: false,
-            renderCell: (params: GridRenderCellParams) =>
-                <Button
-                    color="error"
-                    size="small"
-                    onClick={() => handleDelete(params.id as string)}>
-                    Delete
-                </Button>
+            width: 120,
+            renderCell: (params: GridRenderCellParams<Customer>) => (
+                <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "8px",
+                        height: "100%",
+                    }}
+                >
+                    <EditIcon
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleEdit(params.row)}
+                    />
+                    <DeleteIcon
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleDelete(params.row)}
+                    />
+                </div>
+            ),
         },
 
-        // Edit button column
-        { 
-            field: "edit",
-            headerName: "",
-            sortable: false,    
-            filterable: false,
-            renderCell: (params: GridRenderCellParams) =>
-                <Button>
-                    <EditCustomer customer={params.row} handleEdit={handleEdit} />
-                </Button>
-        },
 
         { field: 'firstname', headerName: 'First Name', width: 130 },
         { field: 'lastname', headerName: 'Last Name', width: 130 },
@@ -78,25 +81,25 @@ function CustomerList() {
             .catch(error => console.error('Error adding customer:', error));
     }
 
-const handleEdit = (updatedCustomer: Customer) => {
-    const { _links, ...customerWithoutLinks } = updatedCustomer;
+    const handleEdit = (updatedCustomer: Customer) => {
+        const { _links, ...customerWithoutLinks } = updatedCustomer;
 
-    fetch(updatedCustomer._links.self.href, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(customerWithoutLinks)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to update customer');
-        }
-        return response.json();
-    })
-    .then(() => getCustomers())
-    .catch(error => console.error('Error updating customer:', error));
-};
+        fetch(updatedCustomer._links.self.href, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(customerWithoutLinks)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to update customer');
+                }
+                return response.json();
+            })
+            .then(() => getCustomers())
+            .catch(error => console.error('Error updating customer:', error));
+    };
 
     useEffect(() => {
         getCustomers();
@@ -107,7 +110,7 @@ const handleEdit = (updatedCustomer: Customer) => {
             <Stack direction="row" sx={{ mt: 2, mb: 2 }} >
                 <AddCustomer handleAdd={handleAdd} />
             </Stack>
-            <div style={{ width: "100%", height: 500 }}>
+            <div style={{ width: "100%", height: 600 }}>
                 <DataGrid
                     rows={customers}
                     columns={columns}
