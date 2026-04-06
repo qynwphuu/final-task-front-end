@@ -39,7 +39,7 @@ function CustomerList() {
         },
 
 
-        { field: 'firstname', headerName: 'First Name', width: 130 },
+        { field: 'firstname', headerName: 'First Name', width: 130},
         { field: 'lastname', headerName: 'Last Name', width: 130 },
         { field: 'email', headerName: 'Email', width: 200 },
         { field: 'phone', headerName: 'Phone', width: 150 },
@@ -134,6 +134,7 @@ function CustomerList() {
                     columns={columns}
                     getRowId={row => row._links.self.href}
                     autoPageSize
+                    sx ={{ width: "100%" }}
                 />
             </div>
 

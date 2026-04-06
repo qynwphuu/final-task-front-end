@@ -1,4 +1,5 @@
 import CssBaseline from '@mui/material/CssBaseline';
+import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
@@ -6,29 +7,22 @@ import CustomerList from './components/CustomerList';
 
 function App() {
   return (
-    <div
-      style={{
-        height: "100vh",
-        width: "100vw",
-        display: "flex",
-        flexDirection: "column"
-      }}
-    >
+    <>
+      <CssBaseline />
+
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div">
+          <Typography variant="h6">
             Personal Trainer
           </Typography>
         </Toolbar>
       </AppBar>
 
-      <div style={{ flex: 1 }}>
+      <Container maxWidth={false} disableGutters sx={{ height: "calc(100vh - 64px)", display: "flex", flexDirection: "column" }}>
         <CustomerList />
-      </div>
-
-      <CssBaseline />
-    </div>
+      </Container>
+    </>
   );
 }
 
-export default App
+export default App;
