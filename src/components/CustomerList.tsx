@@ -137,22 +137,22 @@ function CustomerList() {
 
     function CustomToolbar() {
         return (
-            <Toolbar sx={{ py: 3, px: 2 }}>
-                <Typography variant="h6">
-                    Customers
-                </Typography>
-
+            <Toolbar>
                 <Box
                     sx={{
+                        py: 3,
+                        px: 2,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "space-between",
                         width: "100%",
                         gap: 1,
-                        flex: 1
+                        flex: 1,
                     }}
                 >
-                    <Box /> {/* Empty box to push controls to the right */}
+                    <Typography variant="h6">
+                        Customers
+                    </Typography>
 
                     <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                         <QuickFilter defaultExpanded>
@@ -192,8 +192,13 @@ function CustomerList() {
                     rows={customers}
                     columns={columns}
                     getRowId={row => row._links.self.href}
-                    autoPageSize
-                    sx={{ maxWidth: "100%" }}
+                    initialState={{
+                        pagination: {
+                            paginationModel: { page: 0, pageSize: 10 },
+                        },
+                    }}
+                    pageSizeOptions={[5, 10, 25]}
+                    sx={{ width: "100%" }}
                     showToolbar
                     slots={{ toolbar: CustomToolbar }}
                 />
