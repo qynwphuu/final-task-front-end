@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
+import AddBox from '@mui/icons-material/AddBox';
 import type { Customer } from './types.ts';
 import CustomerForm from './CustomerForm.tsx';
 
@@ -10,7 +12,7 @@ type AddCustomerProps = {
     handleAdd: (customer: Customer) => void;
 }
 
-export default function AddCustomer(props: AddCustomerProps) {
+export default function AddCustomer({ handleAdd }: AddCustomerProps) {
     const [open, setOpen] = useState(false);
     const [customer, setCustomer] = useState<Customer>({
         firstname: '',
@@ -26,16 +28,11 @@ export default function AddCustomer(props: AddCustomerProps) {
         }
     });
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    }
-
-    const handleClose = () => {
-        setOpen(false);
-    }
+    const handleClickOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     const handleSave = () => {
-        props.handleAdd(customer);
+        handleAdd(customer);
         setCustomer({
             firstname: '',
             lastname: '',
@@ -54,9 +51,10 @@ export default function AddCustomer(props: AddCustomerProps) {
 
     return (
         <>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Add Customer
-            </Button>
+            <IconButton aria-label="Add customer" onClick={handleClickOpen} size="small">
+                <AddBox fontSize="small" />
+            </IconButton>
+
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>Add Customer</DialogTitle>
                 <CustomerForm customer={customer} setCustomer={setCustomer} />

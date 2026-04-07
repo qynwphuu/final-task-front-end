@@ -1,5 +1,5 @@
 import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
@@ -18,9 +18,9 @@ function App() {
         </Toolbar>
       </AppBar>
 
-      <Container maxWidth={false} disableGutters sx={{ height: "calc(100vh - 64px)", display: "flex", flexDirection: "column" }}>
+      <Box sx={{ flex: 1, p: 2 }}>
         <CustomerList />
-      </Container>
+      </Box>
     </>
   );
 }

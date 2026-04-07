@@ -1,12 +1,22 @@
-import type { Customer } from "./types.ts";
-import { useState, useEffect, } from "react";
+import { useEffect, useState } from "react";
+import type { Customer } from "./types";
 import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { DataGrid } from "@mui/x-data-grid";
-import { Stack } from "@mui/material";
+import {
+    DataGrid,
+    QuickFilter,
+    QuickFilterClear,
+    QuickFilterControl,
+    Toolbar,
+} from "@mui/x-data-grid";
+import Box from "@mui/material/Box";
+import InputAdornment from "@mui/material/InputAdornment";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 import { deleteCustomer, fetchCustomer } from "./customerAPI";
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import AddCustomer from "./AddCustomer.tsx";
+import SearchIcon from "@mui/icons-material/Search";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddCustomer from "./AddCustomer";
 
 function CustomerList() {
     const [customers, setCustomers] = useState<Customer[]>([]);
@@ -22,31 +32,33 @@ function CustomerList() {
                     style={{
                         display: "flex",
                         alignItems: "center",
-                        gap: "8px",
-                        height: "100%",
+                        gap: "15px",
+                        height: "90%",
+
                     }}
                 >
-                    <EditIcon
-                        style={{ cursor: "pointer" }}
-                        onClick={() => handleEdit(params.row)}
-                    />
                     <DeleteIcon
                         style={{ cursor: "pointer" }}
                         onClick={() => handleDelete(params.row._links.self.href)}
                     />
+
+                    <EditIcon
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleEdit(params.row)}
+                    />
+
                 </div>
             ),
         },
 
 
-        { field: 'firstname', headerName: 'First Name', width: 130},
+        { field: 'firstname', headerName: 'First Name', width: 130 },
         { field: 'lastname', headerName: 'Last Name', width: 130 },
         { field: 'email', headerName: 'Email', width: 200 },
         { field: 'phone', headerName: 'Phone', width: 150 },
         { field: 'streetaddress', headerName: 'Address', width: 200 },
         { field: 'postcode', headerName: 'Postcode', width: 120 },
         { field: 'city', headerName: 'City', width: 120 },
-        { field: 'price', headerName: 'Price', width: 90 },
     ];
 
     const getCustomers = () => {
@@ -123,20 +135,69 @@ function CustomerList() {
         getCustomers();
     }, []);
 
+    function CustomToolbar() {
+        return (
+            <Toolbar sx={{ py: 3, px: 2 }}>
+                <Typography variant="h6">
+                    Customers
+                </Typography>
+
+                <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        gap: 1,
+                        flex: 1
+                    }}
+                >
+                    <Box /> {/* Empty box to push controls to the right */}
+
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                        <QuickFilter defaultExpanded>
+                            <QuickFilterControl
+                                placeholder="Search"
+                                aria-label="Search customers"
+                                render={(params) => (
+                                    <TextField
+                                        {...params}
+                                        variant="standard"
+                                        size="small"
+                                        placeholder="Search"
+                                        InputProps={{
+                                            startAdornment: (
+                                                <InputAdornment position="start">
+                                                    <SearchIcon fontSize="small" />
+                                                </InputAdornment>
+                                            ),
+                                        }}
+                                    />
+                                )}
+                            />
+                            <QuickFilterClear aria-label="Clear search" />
+                        </QuickFilter>
+                        <AddCustomer handleAdd={handleAdd} />
+                    </Box>
+                </Box>
+            </Toolbar>
+        );
+    }
+
     return (
         <>
-            <Stack direction="row" sx={{ mt: 2, mb: 2 }} >
-                <AddCustomer handleAdd={handleAdd} />
-            </Stack>
-            <div style={{ width: "100%", height: 600 }}>
+            <Box sx={{ flex: 1, maxHeight: "calc(100vh - 200px)" }}>
+
                 <DataGrid
                     rows={customers}
                     columns={columns}
                     getRowId={row => row._links.self.href}
                     autoPageSize
-                    sx ={{ width: "100%" }}
+                    sx={{ maxWidth: "100%" }}
+                    showToolbar
+                    slots={{ toolbar: CustomToolbar }}
                 />
-            </div>
+            </Box>
 
         </>
     );
