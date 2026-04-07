@@ -52,13 +52,13 @@ function CustomerList() {
         },
 
 
-        { field: 'firstname', headerName: 'First Name', width: 130 },
-        { field: 'lastname', headerName: 'Last Name', width: 130 },
-        { field: 'email', headerName: 'Email', width: 200 },
-        { field: 'phone', headerName: 'Phone', width: 150 },
-        { field: 'streetaddress', headerName: 'Address', width: 200 },
-        { field: 'postcode', headerName: 'Postcode', width: 120 },
-        { field: 'city', headerName: 'City', width: 120 },
+        { field: 'firstname', headerName: 'First name', minWidth: 130, flex: 1 },
+        { field: 'lastname', headerName: 'Last name', minWidth: 130, flex: 1 },
+        { field: 'email', headerName: 'Email', minWidth: 200, flex: 1.4 },
+        { field: 'phone', headerName: 'Phone', minWidth: 150, flex: 1 },
+        { field: 'streetaddress', headerName: 'Address', minWidth: 200, flex: 1.3 },
+        { field: 'postcode', headerName: 'Postcode', minWidth: 120, flex: 0.8 },
+        { field: 'city', headerName: 'City', minWidth: 120, flex: 1 },
     ];
 
     const getCustomers = () => {
