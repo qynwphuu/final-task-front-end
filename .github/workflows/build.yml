@@ -16,8 +16,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
 
-      - run: npm install
+      - run: npm ci
       - run: npm run build
 
   deploy:
@@ -31,6 +32,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
 
       - run: npm ci
       - run: npm run build
