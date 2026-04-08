@@ -19,7 +19,10 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
 
-      - run: npm ci
+      - run: npm i -g npm@11.6.2
+      - run: npm --version
+
+      - run: npm install
         working-directory: .
       - run: npm run build
         working-directory: .
@@ -38,7 +41,10 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
 
-      - run: npm ci
+      - run: npm i -g npm@11.6.2
+      - run: npm --version
+
+      - run: npm install
         working-directory: .
       - run: npm run build
         working-directory: .
