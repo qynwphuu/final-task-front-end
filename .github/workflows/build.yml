@@ -17,9 +17,12 @@ jobs:
         with:
           node-version: '22'
           cache: npm
+          cache-dependency-path: package-lock.json
 
       - run: npm ci
+        working-directory: .
       - run: npm run build
+        working-directory: .
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -33,9 +36,12 @@ jobs:
         with:
           node-version: '22'
           cache: npm
+          cache-dependency-path: package-lock.json
 
       - run: npm ci
+        working-directory: .
       - run: npm run build
+        working-directory: .
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4

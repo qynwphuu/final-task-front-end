@@ -6,5 +6,8 @@
 		{
 			"path": "../../BACKEND/movie"
 		}
-	]
+	],
+	"settings": {
+		"java.compile.nullAnalysis.mode": "disabled"
+	}
 }
