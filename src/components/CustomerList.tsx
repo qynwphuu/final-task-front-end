@@ -1,22 +1,13 @@
 import { useEffect, useState } from "react";
 import type { Customer } from "./types";
 import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import {
-    DataGrid,
-    QuickFilter,
-    QuickFilterClear,
-    QuickFilterControl,
-    Toolbar,
-} from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import InputAdornment from "@mui/material/InputAdornment";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
 import { deleteCustomer, fetchCustomer } from "./customerAPI";
-import SearchIcon from "@mui/icons-material/Search";
+import { DataGrid } from "@mui/x-data-grid";
+import Stack from "@mui/material/Stack";
+import AddCustomer from "./AddCustomer";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddCustomer from "./AddCustomer";
 
 function CustomerList() {
     const [customers, setCustomers] = useState<Customer[]>([]);
@@ -135,59 +126,13 @@ function CustomerList() {
         getCustomers();
     }, []);
 
-    function CustomToolbar() {
-        return (
-            <Toolbar>
-                <Box
-                    sx={{
-                        py: 3,
-                        px: 2,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        width: "100%",
-                        gap: 1,
-                        flex: 1,
-                    }}
-                >
-                    <Typography variant="h6">
-                        Customers
-                    </Typography>
-
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                        <QuickFilter defaultExpanded>
-                            <QuickFilterControl
-                                placeholder="Search"
-                                aria-label="Search customers"
-                                render={(params) => (
-                                    <TextField
-                                        {...params}
-                                        variant="standard"
-                                        size="small"
-                                        placeholder="Search"
-                                        InputProps={{
-                                            startAdornment: (
-                                                <InputAdornment position="start">
-                                                    <SearchIcon fontSize="small" />
-                                                </InputAdornment>
-                                            ),
-                                        }}
-                                    />
-                                )}
-                            />
-                            <QuickFilterClear aria-label="Clear search" />
-                        </QuickFilter>
-                        <AddCustomer handleAdd={handleAdd} />
-                    </Box>
-                </Box>
-            </Toolbar>
-        );
-    }
-
     return (
         <>
-            <Box sx={{ flex: 1, maxHeight: "calc(100vh - 200px)" }}>
+            <Stack direction="row" sx={{ mt: 2, mb: 2 }} >
+                <AddCustomer handleAdd={handleAdd} />
+            </Stack>
 
+            <Box sx={{ width: "100%", maxHeight: "calc(100vh - 200px)" }}>
                 <DataGrid
                     rows={customers}
                     columns={columns}
@@ -198,9 +143,8 @@ function CustomerList() {
                         },
                     }}
                     pageSizeOptions={[5, 10, 25]}
-                    sx={{ width: "100%" }}
+                    rowSelection={false}
                     showToolbar
-                    slots={{ toolbar: CustomToolbar }}
                 />
             </Box>
 
