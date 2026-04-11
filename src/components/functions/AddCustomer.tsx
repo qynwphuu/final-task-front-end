@@ -56,7 +56,7 @@ export default function AddCustomer({ handleAdd }: AddCustomerProps) {
             </Button>
 
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Add Customer</DialogTitle>
+                <DialogTitle sx={{ color: 'text.primary', fontWeight: 600 }}>Add Customer</DialogTitle>
                 <CustomerForm customer={customer} setCustomer={setCustomer} />
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
