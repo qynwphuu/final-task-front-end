@@ -4,25 +4,33 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
 import CustomerList from './components/CustomerList';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navigation from "./components/Navigation";
+import { Navigate } from "react-router-dom";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <CssBaseline />
 
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6">
+
+          <Navigation />  
+
+          <Typography variant="h6" sx={{ ml: 1 }}>
             Personal Trainer
           </Typography>
         </Toolbar>
       </AppBar>
 
       <Box sx={{ flex: 1, p: 2 }}>
-        <CustomerList />
+        <Routes>
+          <Route path="/" element={<Navigate to="/customers" />} /> {/* default route */}
+          <Route path="/customers" element={<CustomerList />} />
+        </Routes>
       </Box>
-    </>
+    </BrowserRouter>
   );
 }
-
 export default App;
