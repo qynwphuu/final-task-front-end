@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import type { Customer } from "./types";
+import type { Customer } from "../types";
 import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import { deleteCustomer, fetchCustomer } from "./customerAPI";
+import { deleteCustomer, fetchCustomer } from "../apis/customerAPI";
+import { addTraining } from "../apis/trainingAPI";
 import { DataGrid } from "@mui/x-data-grid";
 import Stack from "@mui/material/Stack";
-import AddCustomer from "./AddCustomer";
-import EditIcon from "@mui/icons-material/Edit";
+import AddCustomer from "../functions/AddCustomer";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditCustomer from "../functions/EditCustomer";
+import AddTraining from "../functions/AddTraining";
+import type { CreateTrainingPayload } from "../apis/trainingAPI";
 
 function CustomerList() {
     const [customers, setCustomers] = useState<Customer[]>([]);
@@ -17,7 +20,7 @@ function CustomerList() {
             field: "actions",
             headerName: "Actions",
             sortable: false,
-            width: 120,
+            width: 250,
             renderCell: (params: GridRenderCellParams<Customer>) => (
                 <div
                     style={{
@@ -25,19 +28,25 @@ function CustomerList() {
                         alignItems: "center",
                         gap: "15px",
                         height: "90%",
-
                     }}
                 >
+                    {/* Delete button */}
                     <DeleteIcon
                         style={{ cursor: "pointer" }}
                         onClick={() => handleDelete(params.row._links.self.href)}
+                    />  
+
+                    {/* Edit button */}
+                    <EditCustomer
+                        customer={params.row}
+                        handleEdit={handleEdit}
                     />
 
-                    <EditIcon
-                        style={{ cursor: "pointer" }}
-                        onClick={() => handleEdit(params.row)}
+                    <AddTraining
+                        customerUrl={params.row._links.self.href}
+                        handleAdd={handleAddTraining}
                     />
-
+                    
                 </div>
             ),
         },
@@ -82,6 +91,11 @@ function CustomerList() {
             })
             .then(() => getCustomers())
             .catch(error => console.error('Error adding customer:', error));
+    }
+
+    const handleAddTraining = (newTraining: CreateTrainingPayload) => {
+        addTraining(newTraining)
+            .catch(error => console.error('Error adding training:', error));
     }
 
     const handleEdit = (updatedCustomer: Customer) => {
@@ -132,14 +146,14 @@ function CustomerList() {
                 <AddCustomer handleAdd={handleAdd} />
             </Stack>
 
-            <Box sx={{ width: "100%", maxHeight: "calc(100vh - 200px)" }}>
+            <Box sx={{ width: "100%", height: "calc(100vh - 200px)" }}>
                 <DataGrid
                     rows={customers}
-                    columns={columns}
+                    columns={columns}   
                     getRowId={row => row._links.self.href}
                     initialState={{
                         pagination: {
-                            paginationModel: { page: 0, pageSize: 10 },
+                            paginationModel: { page: 0, pageSize: 10  },
                         },
                     }}
                     pageSizeOptions={[5, 10, 25]}

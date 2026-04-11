@@ -16,6 +16,9 @@ export type Training = {
   date: string;
   duration: number;
   activity: string;
-  customer: string; // link URL
+  _links: {
+    self: { href: string };
+    customer: { href: string };
+  };
 };
 

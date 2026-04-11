@@ -3,8 +3,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-import type { Customer } from './types.ts';
-import CustomerForm from './CustomerForm.tsx';
+import type { Customer } from '../types.ts';
+import CustomerForm from '../CustomerForm.tsx';
 
 type AddCustomerProps = {
     handleAdd: (customer: Customer) => void;
@@ -12,6 +12,8 @@ type AddCustomerProps = {
 
 export default function AddCustomer({ handleAdd }: AddCustomerProps) {
     const [open, setOpen] = useState(false);
+
+    // create a state for the new customer with empty fields
     const [customer, setCustomer] = useState<Customer>({
         firstname: '',
         lastname: '',

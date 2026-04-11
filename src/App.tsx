@@ -3,9 +3,10 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
-import CustomerList from './components/CustomerList';
+import CustomerList from './components/lists/CustomerList';
+import TrainingList from './components/lists/TrainingList';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navigation from "./components/Navigation";
+import Navigation from "./components/functions/Navigation";
 import { Navigate } from "react-router-dom";
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/customers" />} /> {/* default route */}
           <Route path="/customers" element={<CustomerList />} />
+          <Route path="/trainings" element={<TrainingList />} />
         </Routes>
       </Box>
     </BrowserRouter>

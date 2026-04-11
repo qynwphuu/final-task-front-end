@@ -8,7 +8,6 @@ type CustomerFormType = {
     setCustomer: React.Dispatch<React.SetStateAction<Customer>>, // same as state
 }
 
-
 export default function CustomerForm(props: CustomerFormType) {
     return (
         <DialogContent>
