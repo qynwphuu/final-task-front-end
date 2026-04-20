@@ -55,6 +55,7 @@ function TrainingList() {
         deleteTraining(String(id))
             .then(() => getTrainings())
             .catch(error => console.error('Error deleting training:', error));
+        alert('Are you sure you want to delete this training?');
     }
 
     useEffect(() => {
