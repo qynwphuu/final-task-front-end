@@ -8,6 +8,7 @@ import TrainingList from './components/lists/TrainingList';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navigation from "./components/functions/Navigation";
 import { Navigate } from "react-router-dom";
+import Calendar from './components/calendar/Calendar';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/" element={<Navigate to="/customers" />} /> {/* default route */}
           <Route path="/customers" element={<CustomerList />} />
           <Route path="/trainings" element={<TrainingList />} />
+          <Route path="/calendar" element={<Calendar />} />
         </Routes>
       </Box>
     </BrowserRouter>
