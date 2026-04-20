@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { Box, Paper } from '@mui/material';
-import { fetchTrainings } from '../apis/trainingAPI';
+import {  fetchTrainingsWithCustomers } from '../apis/trainingAPI';
 
 // Define calendar event type
 interface CalendarEvent {
@@ -16,10 +16,10 @@ const Calendar: React.FC = () => {
     const [events, setEvents] = useState<CalendarEvent[]>([]);
 
     useEffect(() => {
-        fetchTrainings()
+        fetchTrainingsWithCustomers()
         .then(data => {
             // after getting data, map it into FullCalendar format
-            const formattedEvents = data._embedded.trainings.map((training) => ({
+            const formattedEvents = data.map((training) => ({
                 title: `${training.activity} / ${training.customer?.firstname}`, // add the name of their activity also
                 start: training.date.split('T')[0], // get date part only
                 backgroundColor: '#1976d2', // blue color for events
