@@ -20,7 +20,7 @@ export type Training = {
     self: { href: string };
     customer: { href: string };
   };
-  customer: {
+  customer?: {
     firstname: string;
     lastname: string;
   }

@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import DialogContent from '@mui/material/DialogContent';
-import type { Training } from './types';
+import type { Training } from '../types';
 
 type TrainingFormType = {
     training: Training, // take the training object from other file as props

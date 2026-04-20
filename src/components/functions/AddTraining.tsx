@@ -4,7 +4,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import type { Training } from "../types";
-import TrainingForm from "../TrainingForm";
+import TrainingForm from "../forms/TrainingForm";
 import type { CreateTrainingPayload } from "../apis/trainingAPI";
 
 type AddTrainingProps = {

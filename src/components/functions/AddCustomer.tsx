@@ -4,7 +4,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import type { Customer } from '../types.ts';
-import CustomerForm from '../CustomerForm.tsx';
+import CustomerForm from '../forms/CustomerForm';
 
 type AddCustomerProps = {
     handleAdd: (customer: Customer) => void;

@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
 import DialogContent from '@mui/material/DialogContent';
-import type { Customer } from './types';
+import type { Customer } from '../types';
 
 type CustomerFormType = {
     customer: Customer, // take the customer object from other file as props

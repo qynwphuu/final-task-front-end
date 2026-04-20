@@ -4,7 +4,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import type { Customer } from "../types";
-import CustomerForm from "../CustomerForm";
+import CustomerForm from "../forms/CustomerForm";
 import EditIcon from "@mui/icons-material/Edit";
 
 
