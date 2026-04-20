@@ -63,12 +63,13 @@ function TrainingList() {
     }, []);
 
     return (
-        <Box sx={{ width: '100%', height: "calc(100vh - 100px)" }}>
+        <Box sx={{ width: '100%' }}>
             <DataGrid
                 rows={trainings}
                 columns={columns}
                 getRowId={(row) => row.id}
-                pageSizeOptions={[5, 10, 20]}
+                autoPageSize
+                autoHeight
                 showToolbar
             />
         </Box>

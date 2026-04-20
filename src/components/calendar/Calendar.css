@@ -1,0 +1,40 @@
+ /* CSS for blue texts inside calendar */
+ .fc-event {
+     border: none !important;
+     padding: 2px 4px !important;
+     margin-bottom: 1px !important;
+     border-radius: 4px !important;
+     cursor: pointer;
+ }
+
+ .fc-event-title {
+     font-weight: 500 !important;
+     font-size: 0.85em !important;
+ }
+
+ .fc-daygrid-day-top {
+     flex-direction: row !important;
+ }
+
+ .fc-theme-standard td,
+ .fc-theme-standard th {
+     border: 1px solid #eee !important;
+ }
+
+ .fc-toolbar-title {
+     font-weight: 700 !important;
+     font-size: 1.5em !important;
+     color: black !important;
+ }
+
+ .fc button {
+     background-color: #f8f9fa !important;
+     border-color: #ddd !important;
+     color: #333 !important;
+ }
+
+ .fc button:hover {
+     background-color: #e2e6ea !important;
+     border-color: #ccc !important;
+     color: #000 !important;
+ }

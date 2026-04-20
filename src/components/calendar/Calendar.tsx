@@ -1,94 +1,88 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { Box, Paper } from '@mui/material';
-import {  fetchTrainingsWithCustomers } from '../apis/trainingAPI';
+import { fetchTrainingsWithCustomers } from '../apis/trainingAPI';
+import { addMinutes } from 'date-fns';
+import '../calendar/Calendar.css'; // Import custom CSS for calendar styling
 
 // Define calendar event type
 interface CalendarEvent {
-  title: string;
-  start: string; // YYYY-MM-DD
-  color?: string;
+    title: string;
+    start: string; // YYYY-MM-DD
+    color?: string;
 }
 
 const Calendar: React.FC = () => {
-  // Data
+    // Data
     const [events, setEvents] = useState<CalendarEvent[]>([]);
 
     useEffect(() => {
         fetchTrainingsWithCustomers()
-        .then(data => {
-            // after getting data, map it into FullCalendar format
-            const formattedEvents = data.map((training) => ({
-                title: `${training.activity} / ${training.customer?.firstname}`, // add the name of their activity also
-                start: training.date.split('T')[0], // get date part only
-                backgroundColor: '#1976d2', // blue color for events
-                borderColor: '#1976d2', // same as background for a solid look 
-                allDay: true
-            }))
-            setEvents(formattedEvents);
+            .then(data => {
+                // after getting data, map it into FullCalendar format
+                const formattedEvents = data.map((training) => {
+                    const startTime = new Date(training.date)
+                    const endTime = addMinutes(startTime, training.duration);
 
-        })
-        .catch(error => console.error('Error fetching trainings:', error));
+                    return {
+                        title: `${training.activity} / ${training.customer?.firstname}`, // add the name of their activity also
+                        start: training.date, // get date part only
+                        end: endTime.toISOString(), // get end time
+                        backgroundColor: '#1976d2',
+                        borderColor: '#1976d2',
+                        allDay: false // treat as timed event
+                    };
+
+                });
+                setEvents(formattedEvents);
+
+            })
+            .catch(error => console.error('Error fetching trainings:', error));
     }, []);
 
-  return (
-    <Box sx={{ width: "100%", height: "90%", p: 2 }}>
-      <Paper elevation={3} sx={{ p: 1 }}>
-        <FullCalendar
-          plugins={[dayGridPlugin]}
-          initialView="dayGridMonth"
-          titleFormat={{year: 'numeric', month: 'long'}}
-          events={events}
-          height="auto"
-          // Custom header toolbar 
-          headerToolbar={{
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,dayGridWeek,dayGridDay'
-          }}
-          // CSS 
-          eventClassNames="custom-event-bar"
-        />
-      </Paper>
+    return (
+        <Box sx={{ width: "100%", height: "90%", p: 2 }}>
+            <Paper elevation={3} sx={{ p: 1 }}>
+                <FullCalendar
+                    plugins={[dayGridPlugin]}
+                    initialView="dayGridMonth"
+                    titleFormat={{ year: 'numeric', month: 'long' }}
+                    events={events}
+                    height="auto"
+                    // Custom header toolbar 
+                    headerToolbar={{
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,dayGridWeek,dayGridDay'
+                    }}
+                    // CSS 
+                    eventClassNames="custom-event-bar"
+                    // EventInfo
+                    eventContent={(eventInfo) => {
+                        const start = eventInfo.event.start?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+                        const end = eventInfo.event.end?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
 
-      {/* CSS for blue texts inside calendar */}
-      <style>{`
-        .fc-event {
-          border: none !important;
-          padding: 2px 4px !important;
-          margin-bottom: 1px !important;
-          border-radius: 4px !important;
-          cursor: pointer;
-        }
-        .fc-event-title {
-          font-weight: 500 !important;
-          font-size: 0.85em !important;
-        }
-        .fc-daygrid-day-top {
-          flex-direction: row !important; 
-        }
-        .fc-theme-standard td, .fc-theme-standard th {
-          border: 1px solid #eee !important; 
-        }
-        .fc-toolbar-title {
-          font-weight: 700 !important;
-          font-size: 1.5em !important;
-          color: black !important;
-        }
-        .fc button {
-            background-color: #f8f9fa !important;
-            border-color: #ddd !important;
-            color: #333 !important;
-        }
-        .fc button:hover {
-            background-color: #e2e6ea !important;
-            border-color: #ccc !important;
-            color: #000 !important;
-        }    
-      `}</style>
-    </Box>
-  );
+                        return (
+                            <div style={{
+                                fontSize: '0.75rem',
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                                padding: '2px',
+                                color: 'white',
+                                backgroundColor: '#1976d2',
+                                borderRadius: '4px',
+                                width: '100%',
+                            }}>
+                                <b>{start} - {end}</b> {eventInfo.event.title}
+                            </div>
+                        )
+                    }}
+                />
+            </Paper>
+        </Box>
+    );
 };
 
 export default Calendar;
