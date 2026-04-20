@@ -20,7 +20,7 @@ const Calendar: React.FC = () => {
         .then(data => {
             // after getting data, map it into FullCalendar format
             const formattedEvents = data._embedded.trainings.map((training) => ({
-                title: training.activity,
+                title: `${training.activity} / ${training.customer?.firstname}`, // add the name of their activity also
                 start: training.date.split('T')[0], // get date part only
                 backgroundColor: '#1976d2', // blue color for events
                 borderColor: '#1976d2', // same as background for a solid look 
