@@ -29,7 +29,7 @@ export default function EditCustomer({ customer, handleEdit }: {
             />
 
             <Dialog open={open} onClose={() => setOpen(false)}>
-                <DialogTitle>Edit Customer</DialogTitle>
+                <DialogTitle sx={{ color: 'text.primary', fontWeight: 600 }}>Edit Customer</DialogTitle>
 
                 {/* reuse the CustomerForm component, edited gets updated as the user types */}
                 <CustomerForm customer={edited} setCustomer={setEdited} />
