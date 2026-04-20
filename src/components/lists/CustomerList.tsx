@@ -21,6 +21,7 @@ function CustomerList() {
             headerName: "Actions",
             sortable: false,
             width: 250,
+
             renderCell: (params: GridRenderCellParams<Customer>) => (
                 <div
                     style={{
@@ -34,7 +35,7 @@ function CustomerList() {
                     <DeleteIcon
                         style={{ cursor: "pointer" }}
                         onClick={() => handleDelete(params.row._links.self.href)}
-                    />  
+                    />
 
                     {/* Edit button */}
                     <EditCustomer
@@ -46,7 +47,7 @@ function CustomerList() {
                         customerUrl={params.row._links.self.href}
                         handleAdd={handleAddTraining}
                     />
-                    
+
                 </div>
             ),
         },
@@ -149,16 +150,28 @@ function CustomerList() {
             <Box sx={{ width: "100%", height: "calc(100vh - 200px)" }}>
                 <DataGrid
                     rows={customers}
-                    columns={columns}   
+                    columns={columns}
                     getRowId={row => row._links.self.href}
                     initialState={{
                         pagination: {
-                            paginationModel: { page: 0, pageSize: 10  },
+                            paginationModel: { page: 0, pageSize: 10 },
                         },
                     }}
                     pageSizeOptions={[5, 10, 25]}
                     rowSelection={false}
                     showToolbar
+
+                    // Helps with CSV download without Actions column and with correct UTF-8 encoding
+                    slotProps={{
+                        toolbar: {
+                            csvOptions: {
+                                fields: ['firstname', 'lastname', 'email', 'phone', 'streetaddress', 'postcode', 'city'],
+                                fileName: 'customers_export',
+                                utf8WithBom: true,
+                            }
+                        }
+                    }
+                    }
                 />
             </Box>
 
