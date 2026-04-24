@@ -37,6 +37,12 @@ export default function Navigation() {
                             <ListItemText primary="Calendar" />
                         </ListItemButton>
                     </ListItem>
+
+                    <ListItem disablePadding>
+                        <ListItemButton onClick={() => navigate("/statistics")}>
+                            <ListItemText primary="Statistics" />
+                        </ListItemButton>
+                    </ListItem>
                 </List>
             </Drawer>
         </>

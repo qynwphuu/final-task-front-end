@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,8 +10,19 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navigation from "./components/functions/Navigation";
 import { Navigate } from "react-router-dom";
 import Calendar from './components/calendar/Calendar';
+import Statistics from './components/chart/Statistics';
+import { fetchTrainings } from './components/apis/trainingAPI';
+import type { Training } from './components/types';
 
 function App() {
+  const [trainings, setTrainings] = useState<Training[]>([]);
+
+  useEffect(() => {
+    fetchTrainings()
+      .then((response) => setTrainings(response._embedded.trainings))
+      .catch((error) => console.error('Error fetching trainings:', error));
+  }, []);
+
   return (
     <BrowserRouter>
       <CssBaseline />
@@ -32,6 +44,7 @@ function App() {
           <Route path="/customers" element={<CustomerList />} />
           <Route path="/trainings" element={<TrainingList />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/statistics" element={<Statistics data={trainings} yKey="duration" />} />
         </Routes>
       </Box>
     </BrowserRouter>
