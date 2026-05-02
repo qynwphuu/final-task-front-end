@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Customer } from "../types";
 import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import { deleteCustomer, fetchCustomer } from "../apis/customerAPI";
+import { createCustomer, deleteCustomer, fetchCustomer } from "../apis/customerAPI";
 import { addTraining } from "../apis/trainingAPI";
 import { DataGrid } from "@mui/x-data-grid";
 import Stack from "@mui/material/Stack";
@@ -77,19 +77,25 @@ function CustomerList() {
     }
 
     const handleAdd = (newCustomer: Customer) => {
-        fetch(import.meta.env.VITE_API_URL + '/customers', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newCustomer)
+        const {
+            firstname,
+            lastname,
+            email,
+            phone,
+            streetaddress,
+            postcode,
+            city,
+        } = newCustomer;
+
+        createCustomer({
+            firstname,
+            lastname,
+            email,
+            phone,
+            streetaddress,
+            postcode,
+            city,
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Failed to add customer');
-                }
-                return response.json();
-            })
             .then(() => getCustomers())
             .catch(error => console.error('Error adding customer:', error));
     }

@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
 import CustomerList from './components/lists/CustomerList';
 import TrainingList from './components/lists/TrainingList';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Navigation from "./components/functions/Navigation";
 import { Navigate } from "react-router-dom";
 import Calendar from './components/calendar/Calendar';
@@ -24,7 +24,7 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <CssBaseline />
 
       <AppBar position="static">
@@ -47,7 +47,7 @@ function App() {
           <Route path="/statistics" element={<Statistics data={trainings} yKey="duration" />} />
         </Routes>
       </Box>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 export default App;

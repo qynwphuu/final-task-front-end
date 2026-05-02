@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
+import type { EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { Box, Paper } from '@mui/material';
 import { fetchTrainingsWithCustomers } from '../apis/trainingAPI';
 import { addMinutes } from 'date-fns';
 import '../calendar/Calendar.css'; // Import custom CSS for calendar styling
 
-// Define calendar event type
-interface CalendarEvent {
-    title: string;
-    start: string; // YYYY-MM-DD
-    color?: string;
-}
-
 const Calendar: React.FC = () => {
     // Data
-    const [events, setEvents] = useState<CalendarEvent[]>([]);
+    const [events, setEvents] = useState<EventInput[]>([]);
 
     useEffect(() => {
         fetchTrainingsWithCustomers()

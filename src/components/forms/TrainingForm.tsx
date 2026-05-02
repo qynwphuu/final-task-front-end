@@ -28,7 +28,7 @@ export default function TrainingForm(props: TrainingFormType) {
                 type="number"
                 fullWidth
                 value={props.training.duration}
-                onChange={(e) => props.setTraining({ ...props.training, duration: parseInt(e.target.value) })}
+                onChange={(e) => props.setTraining({ ...props.training, duration: Number(e.target.value || 0) })}
             />
             <TextField
                 margin="dense"
