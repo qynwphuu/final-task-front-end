@@ -102,6 +102,10 @@ function CustomerList() {
 
     const handleAddTraining = (newTraining: CreateTrainingPayload) => {
         addTraining(newTraining)
+            .then(() => {
+                // notify other parts of the app (e.g., statistics) to refresh
+                window.dispatchEvent(new Event('trainingsUpdated'));
+            })
             .catch(error => console.error('Error adding training:', error));
     }
 

@@ -23,6 +23,17 @@ function App() {
       .catch((error) => console.error('Error fetching trainings:', error));
   }, []);
 
+  useEffect(() => {
+    const handleUpdated = () => {
+      fetchTrainings()
+        .then((response) => setTrainings(response._embedded.trainings))
+        .catch((error) => console.error('Error fetching trainings:', error));
+    };
+
+    window.addEventListener('trainingsUpdated', handleUpdated);
+    return () => window.removeEventListener('trainingsUpdated', handleUpdated);
+  }, []);
+
   return (
     <HashRouter>
       <CssBaseline />
